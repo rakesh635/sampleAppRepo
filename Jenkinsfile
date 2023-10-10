@@ -1,5 +1,4 @@
 @Library('SharedLibrary1@main')_
-import groovy.json.JsonSlurper
 
 //service name is extrapolated from repository name
 def svcName = currentBuild.rawBuild.project.parent.displayName
@@ -16,25 +15,16 @@ def image_dependencies =
       tty: true
 '''
 
-/*def template_vars = [
-    'build_label': 'datascience',
-    'node_version' :'fermium',
-    'image_dependencies' : [image_dependencies]
-]*/
-
-stage('Specs Checkout'){
-      cleanWs()
-      ciFunc.checkoutVarFunc([
-      repo: "https://github.com/rakesh635/sampleAppRepo.git",
-      branch: "main"
-      ])
-}
-
-def jsonSlurper = new JsonSlurper()
-def template_vars = jsonSlurper.parse(new File('pipelineconf.json'))
+def application_vars = [
+    'pod_template': [
+        'build_label': 'datascience',
+        'node_version' :'fermium',
+        'image_dependencies' : [image_dependencies]
+    ]
+]
 
 
-def pod1 = renderTemplate(pod, template_vars)
+def pod1 = renderTemplate(pod, application_vars['pod_template'])
 echo 'Pod Template: ' + pod1 + ';'
 
 //def engine = new groovy.text.SimpleTemplateEngine()
