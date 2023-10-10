@@ -16,15 +16,25 @@ def image_dependencies =
 '''
 
 def application_vars = [
-    'pod_template': [
+    'pod_template_common': [
         'build_label': 'datascience',
         'node_version' :'fermium',
         'image_dependencies' : [image_dependencies]
+    ],
+    'pod_template': [
+        'container1': [ 
+            'type': 'maven',
+            'version': '3.3.9'
+        ],
+        'container2': [
+            'type': 'docker',
+            'verison': '23.0'
+        ]
     ]
 ]
 
-
-def pod1 = renderTemplate(pod, application_vars['pod_template'])
+def podtemplate = renderTemplate(pod, application_vars['pod_template_common'])
+def podtemplate = renderTemplate(podtemplate, application_vars['pod_template'])
 echo 'Pod Template: ' + pod1 + ';'
 
 //def engine = new groovy.text.SimpleTemplateEngine()
