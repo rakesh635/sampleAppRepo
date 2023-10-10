@@ -23,7 +23,7 @@ def image_dependencies =
 ]*/
 
 def jsonSlurper = new JsonSlurper()
-def template_vars = jsonSlurper.parse(new File('pipelineconfig.json'))
+def template_vars = jsonSlurper.parse(new File('pipelineconf.json'))
 
 
 def pod1 = renderTemplate(pod, template_vars)
