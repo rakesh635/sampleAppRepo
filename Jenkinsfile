@@ -1,4 +1,5 @@
 @Library('SharedLibrary1@main')_
+import groovy.json.JsonSlurper
 
 //service name is extrapolated from repository name
 def svcName = currentBuild.rawBuild.project.parent.displayName
@@ -15,11 +16,15 @@ def image_dependencies =
       tty: true
 '''
 
-def template_vars = [
+/*def template_vars = [
     'build_label': 'datascience',
     'node_version' :'fermium',
     'image_dependencies' : [image_dependencies]
-]
+]*/
+
+def jsonSlurper = new JsonSlurper()
+def template_vars = jsonSlurper.parse(new File('pipelineconfig.json'))
+
 
 def pod1 = renderTemplate(pod, template_vars)
 echo 'Pod Template: ' + pod1 + ';'
