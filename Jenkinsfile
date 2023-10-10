@@ -22,6 +22,14 @@ def image_dependencies =
     'image_dependencies' : [image_dependencies]
 ]*/
 
+stage('Specs Checkout'){
+      cleanWs()
+      ciFunc.checkoutVarFunc([
+      repo: "https://github.com/rakesh635/sampleAppRepo.git",
+      branch: "main"
+      ])
+}
+
 def jsonSlurper = new JsonSlurper()
 def template_vars = jsonSlurper.parse(new File('pipelineconf.json'))
 
