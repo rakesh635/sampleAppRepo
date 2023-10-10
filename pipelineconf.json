@@ -1,0 +1,5 @@
+{
+  'build_label': 'datascience',
+  'node_version' :'fermium',
+  'image_dependencies' : [image_dependencies]
+}
